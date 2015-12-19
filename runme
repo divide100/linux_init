@@ -32,7 +32,7 @@ read sshaddr
 
 if [[ ! -z $sshaddr ]]; then
   "Creating $sshaddr variable..."
-  echo 'sshaddr="'$sshaddr'"' >> .bashrc
+  echo 'sshaddr="'$sshaddr'"' >> ~/.bashrc
 fi
 
 . ~/.bashrc
