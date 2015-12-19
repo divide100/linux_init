@@ -119,3 +119,5 @@ export PS1="\[$(tput bold)\]\[$(tput setaf 4)\]\[$(tput bold)\][\[$(tput setaf 6
 random-cowsay
 
 PATH="$PATH:$HOME/bin"
+
+complete -cf sudo
