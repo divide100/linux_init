@@ -19,7 +19,6 @@ if [ -f packages ]; then
 fi
 
 if [ -d home ]; then
-  #rename googles sheit
   echo "Adding home files and folders..."
 	cp -a home/. ~/
   if [ -d ~/bin ]; then
