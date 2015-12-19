@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+randomCow = Dir.entries('/usr/share/cowsay/cows').shuffle.sample
+say = `fortune`
+
+if !$*.empty? then
+	say = $*[0]
+end
+
+exec 'cowsay -f ' + randomCow + ' "' + say + '"'

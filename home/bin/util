@@ -1,0 +1,66 @@
+#!/usr/bin/env ruby
+
+require 'thor'
+
+class Util < Thor 
+  desc "port [-o, -c, -p]", "Allows you to open or close a specific port"
+  option  :open,
+          :type => :boolean,
+          :aliases => 'o'
+
+  option  :close,
+          :type => :boolean,
+          :aliases => 'c'
+
+  option  :port,
+          :type => :string,
+          :aliases => 'p',
+          :required => true
+
+  def port
+    o = options
+    port = o[:port].to_s
+    if port.to_f.to_s == port || port.to_i.to_s == port then 
+      if o[:open] then
+        puts "Opening port '#{port}'..."
+        `sudo /sbin/iptables -I INPUT -p tcp --dport #{port} -j ACCEPT`
+      elsif o[:close] then 
+        puts "Closing port '#{port}'..."
+        `kill $(lsof -ti:#{port})`
+      end
+    else
+      puts "Port must be numeric: #{port}"
+    end
+  end
+
+  desc "server [-p, -d]", "Allows you to start a server in the current (or specefied) directory"
+  option  :port,
+          :type => :string,
+          :aliases => 'p',
+          :required => true
+
+  option  :directory,
+          :type => :string,
+          :aliases => ['d','dir']
+
+  def server
+    o = options
+    
+    port = o[:port].to_s
+    if port.to_f.to_s == port || port.to_i.to_s == port then
+      
+      if o[:directory] then
+        Dir.chdir o[:directory]
+      end 
+
+      puts `util port -op #{port}`
+      puts `python -m SimpleHTTPServer #{port}`
+      puts `util port -cp #{port}`
+    else
+      puts "Port must be numeric: #{port}"
+    end
+  end
+
+end
+
+Util.start(ARGV)

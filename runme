@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# init update
+sudo apt-get update
+sudo apt-get upgrade
+
+# install packages
+if [ -f packages ]; then
+  echo "Installing packages..."
+  pkgmgr="apt-get"
+  while read -r pkg || [[ -n $pkg ]]; do
+    if [[ $pkg == "#"* ]]; then
+      pkgmgr=$(echo $pkg | cut -d'#' -f 2)
+    else
+      echo "Installing "$pkg" with "$pkgmgr"..."
+      sudo $pkgmgr -y install $pkg > /dev/null
+    fi
+  done < packages
+fi
+
+if [ -d home ]; then
+  #rename googles sheit
+  echo "Adding home files and folders..."
+	cp -a home/. ~/
+  if [ -d ~/bin ]; then
+    find ~/bin -type f -exec chmod +x {} \;
+  fi
+fi
+
+echo -n "If you have an SSH server input the address now (blank=none):"
+read sshaddr
+
+if [[ ! -z $sshaddr ]]; then
+  "Creating $sshaddr variable..."
+  echo 'sshaddr="'$sshaddr'"' >> .bashrc
+fi
+
+. ~/.bashrc
