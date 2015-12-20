@@ -106,7 +106,7 @@ class Util < Thor
         end
       end
       if o[:enter] then
-        `ssh #{host}`
+        exec "ssh #{host}"
       end
     else
       puts "IP address is required"
