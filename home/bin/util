@@ -2,6 +2,12 @@
 
 require 'thor'
 
+##################
+# Prime Settings #
+##################
+
+require_relative '.utilrc.rb'
+
 class Util < Thor 
   desc "port [-o, -c, -p]", "Allows you to open or close a specific port"
   option  :open,
@@ -14,12 +20,12 @@ class Util < Thor
 
   option  :port,
           :type => :string,
-          :aliases => 'p',
-          :required => true
+          :aliases => 'p'
 
   def port
     o = options
     port = o[:port].to_s
+    
     if port.to_f.to_s == port || port.to_i.to_s == port then 
       if o[:open] then
         puts "Opening port '#{port}'..."
@@ -36,12 +42,12 @@ class Util < Thor
   desc "server [-p, -d]", "Allows you to start a server in the current (or specefied) directory"
   option  :port,
           :type => :string,
-          :aliases => 'p',
-          :required => true
+          :aliases => 'p'
 
-  option  :directory,
+  option  :homedir,
           :type => :string,
-          :aliases => ['d','dir']
+          :default => PORT_HOMEDIR,
+          :aliases => 'd'
 
   def server
     o = options
@@ -49,8 +55,8 @@ class Util < Thor
     port = o[:port].to_s
     if port.to_f.to_s == port || port.to_i.to_s == port then
       
-      if o[:directory] then
-        Dir.chdir o[:directory]
+      if o[:homedir] then
+        Dir.chdir o[:homedir]
       end 
 
       puts `util port -op #{port}`
@@ -60,7 +66,52 @@ class Util < Thor
       puts "Port must be numeric: #{port}"
     end
   end
+  
+  desc "ssh [-i, -u, -f, -a, -l, -d]", "Allows you to perform ssh functions"
+  option  :address,
+          :type => :string,
+          :default => SSH_ADDRESS,
+          :aliases => 'a'
+  
+  option  :username,
+          :type => :string,
+          :aliases => 'u'
+  
+  option  :enter,
+          :type => :boolean,
+          :aliases => 'e'
 
+  option  :ftp,
+          :type => :boolean,
+          :aliases => 'f'
+
+  option  :homedir,
+          :type => :string,
+          :default => SSH_HOMEDIR,
+          :aliases => 'l'
+
+  option  :hostdir,
+          :type => :string,
+          :aliases => 'd'
+
+  def ssh
+    o = options
+    address = o[:address] 
+    host = o[:username] ? "#{o[:username]}@#{address}" : address
+   
+    if address then 
+      if o[:ftp] then
+        if o[:hostdir] then
+          `sshfs #{host}:#{o[:hostdir]} #{o[:homedir]}`
+        end
+      end
+      if o[:enter] then
+        `ssh #{host}`
+      end
+    else
+      puts "IP address is required"
+    end
+  end
 end
 
 Util.start(ARGV)
