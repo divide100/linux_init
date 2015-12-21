@@ -19,7 +19,7 @@ if [ -f packages ]; then
   done < packages
 fi
 
-echo -n "If you have an SSH server input the address now (blank=none):"
+echo -n "If you have an SSH server input the address now (blank=skip):"
 read sshaddr
 
 if [[ ! -z $sshaddr ]]; then
