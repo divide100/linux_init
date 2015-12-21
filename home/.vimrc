@@ -102,7 +102,8 @@ set statusline +=%2*0x%04B\ %*          "character under cursor
 map 0 ^
 
 " Special mappings
-inoremap jj <ESC>
+nmap m j
+inoremap kk <ESC>
 nnoremap <S-Enter> O<Esc>
 nnoremap <CR> o<Esc>
 nnoremap K i<CR><Esc>
