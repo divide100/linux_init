@@ -1,21 +1,30 @@
 #!/bin/bash
 
 # init update
-sudo apt-get update
-sudo apt-get upgrade
+echo "Updating and upgrading..."
+sudo apt-get update > /dev/null
+sudo apt-get upgrade > /dev/null
 
 # install packages
 if [ -f packages ]; then
   echo "Installing packages..."
-  pkgmgr="apt-get"
+  pkgmgr="apt-get -y"
   while read -r pkg || [[ -n $pkg ]]; do
     if [[ $pkg == "#"* ]]; then
       pkgmgr=$(echo $pkg | cut -d'#' -f 2)
     else
       echo "Installing "$pkg" with "$pkgmgr"..."
-      sudo $pkgmgr -y install $pkg > /dev/null
+      sudo $pkgmgr install $pkg > /dev/null
     fi
   done < packages
+fi
+
+echo -n "If you have an SSH server input the address now (blank=none):"
+read sshaddr
+
+if [[ ! -z $sshaddr ]]; then
+  "Creating $sshaddr variable..."
+  echo 'SSH_ADDRESS="'$sshaddr'"' >> home/bin/.utilrc.rb
 fi
 
 if [ -d home ]; then
@@ -24,14 +33,6 @@ if [ -d home ]; then
   if [ -d ~/bin ]; then
     find ~/bin -type f -exec chmod +x {} \;
   fi
-fi
-
-echo -n "If you have an SSH server input the address now (blank=none):"
-read sshaddr
-
-if [[ ! -z $sshaddr ]]; then
-  "Creating $sshaddr variable..."
-  echo 'sshaddr="'$sshaddr'"' >> ~/.bashrc
 fi
 
 . ~/.bashrc
