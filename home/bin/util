@@ -67,7 +67,7 @@ class Util < Thor
     end
   end
   
-  desc "ssh [-i, -u, -f, -a, -l, -d]", "Allows you to perform ssh functions"
+  desc "ssh [-e, -u, -f, -a, -l, -d]", "Allows you to perform ssh functions"
   option  :address,
           :type => :string,
           :default => SSH_ADDRESS,
