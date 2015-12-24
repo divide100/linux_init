@@ -116,8 +116,8 @@ fi
 # Custom bash prompt via kirsle.net/wizards/ps1.html
 export PS1="\[$(tput bold)\]\[$(tput setaf 4)\]\[$(tput bold)\][\[$(tput setaf 6)\]\u\[$(tput setaf 5)\]@\[$(tput setaf 2)\]\H\[$(tput setaf 4)\]]\[$(tput setaf 7)\]: \[$(tput setaf 0)\]\w\[$(tput setaf 7)\]\n > \[$(tput sgr0)\]"
 
-random-cowsay
-
 PATH="$PATH:$HOME/bin"
 
 complete -cf sudo
+
+random-cowsay
