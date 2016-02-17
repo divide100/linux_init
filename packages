@@ -1,4 +1,6 @@
 #apt-get -y
+build-essential
+curl
 python
 ruby
 cowsay
@@ -11,7 +13,9 @@ tmux
 vim
 deluge
 deluge-web
-git
 ncdu
 #gem
 thor
+#nvm
+node
+http-server

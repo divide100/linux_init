@@ -5,6 +5,20 @@ echo "Updating and upgrading..."
 sudo apt-get update > /dev/null
 sudo apt-get upgrade > /dev/null
 
+# git repos
+if [ -f repositories ]; then
+    supo apt-get -y install git
+    echo "Gitting repositories..."
+    while read -r repo || [[ -n $repo ]]; do
+        if [[ $repo == "#"* ]]; then
+            lbl=$(echo $repo | cut -d'#' -f 2)
+        else
+            echo "Gitting "$lbl"..."
+            sudo git clone $repo > /dev/null
+        fi
+    done < repositories
+fi
+
 # install packages
 if [ -f packages ]; then
   echo "Installing packages..."

@@ -46,7 +46,7 @@ class Util < Thor
 
   option  :homedir,
           :type => :string,
-          :default => PORT_HOMEDIR,
+          :default => SERVER_HOMEDIR,
           :aliases => 'd'
 
   def server
@@ -60,7 +60,8 @@ class Util < Thor
       end 
 
       puts `util port -op #{port}`
-      puts `python -m SimpleHTTPServer #{port}`
+      #puts `python -m SimpleHTTPServer #{port}`
+      puts `http-server -p #{port}`
       puts `util port -cp #{port}`
     else
       puts "Port must be numeric: #{port}"

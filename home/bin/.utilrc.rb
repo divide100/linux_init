@@ -4,9 +4,7 @@
 #    PORT     #
 ###############
 
-PORT_HOMEDIR=`pwd`
-
-
+SERVER_HOMEDIR=`pwd`
 
 ###############
 #     SSH     #
