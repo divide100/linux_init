@@ -11,4 +11,3 @@ SERVER_HOMEDIR=`pwd`
 ###############
 
 SSH_HOMEDIR=`pwd`
-SSH_ADDRESS='104.131.111.146'
