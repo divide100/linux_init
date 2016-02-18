@@ -17,6 +17,5 @@ deluge-web
 ncdu
 #gem
 thor
-#nvm
-node
+#npm
 http-server
