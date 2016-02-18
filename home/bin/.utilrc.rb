@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 ###############
-#    PORT     #
+#   SERVER    #
 ###############
 
 SERVER_HOMEDIR=`pwd`
