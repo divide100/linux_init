@@ -5,4 +5,4 @@ https://github.com/UnderdogTechnology/Plan.it.git ~/Projects/Plan.it
 #Slacker
 https://github.com/UnderdogTechnology/Slacker.git ~/Projects/Slacker
 #c9sdk
-https://github.com/c9/core.git ~/.c9sdk && . ~/.c9sdk/scripts/install-sdk.sh
+https://github.com/c9/core.git ~/.c9sdk && cd ~/.c9sdk && ./scripts/install-sdk.sh

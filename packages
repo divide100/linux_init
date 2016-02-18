@@ -1,5 +1,6 @@
 #apt-get -y
 build-essential
+node
 curl
 python
 ruby
