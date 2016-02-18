@@ -1,3 +1,5 @@
+#nvm
+https://github.com/creationix/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags` && . ~/.nvm/nvm.sh
 #linux_init
 https://github.com/divide100/linux_init.git ~/Projects/linux_init
 #Plan.it
