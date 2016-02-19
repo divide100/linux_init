@@ -60,8 +60,7 @@ class Util < Thor
       end 
 
       puts `util port -op #{port}`
-      #puts `python -m SimpleHTTPServer #{port}`
-      puts `http-server -p #{port}`
+      puts `ruby -run -ehttpd . -p#{port}`
       puts `util port -cp #{port}`
     else
       puts "Port must be numeric: #{port}"

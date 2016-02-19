@@ -1,8 +1,8 @@
 #linux_init
-https://github.com/divide100/linux_init.git ~/Projects/linux_init
+https://github.com/divide100/linux_init.git $HOME/Projects/linux_init
 #Plan.it
-https://github.com/UnderdogTechnology/Plan.it.git ~/Projects/Plan.it
+https://github.com/UnderdogTechnology/Plan.it.git $HOME/Projects/Plan.it
 #Slacker
-https://github.com/UnderdogTechnology/Slacker.git ~/Projects/Slacker
+https://github.com/UnderdogTechnology/Slacker.git $HOME/Projects/Slacker
 #c9sdk
-https://github.com/c9/core.git ~/.c9sdk && cd ~/.c9sdk && ./scripts/install-sdk.sh
+https://github.com/c9/core.git $HOME/.c9sdk && cd $HOME/.c9sdk && ./scripts/install-sdk.sh
