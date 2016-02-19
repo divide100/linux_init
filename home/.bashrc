@@ -113,12 +113,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Load nvm
-if [ -d "$HOME/.nvm"]; then
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-fi
-
 # Custom bash prompt via kirsle.net/wizards/ps1.html
 export PS1="\[$(tput bold)\]\[$(tput setaf 4)\]\[$(tput bold)\][\[$(tput setaf 6)\]\u\[$(tput setaf 5)\]@\[$(tput setaf 2)\]\H\[$(tput setaf 4)\]]\[$(tput setaf 7)\]: \[$(tput setaf 0)\]\w\[$(tput setaf 7)\]\n > \[$(tput sgr0)\]"
 
