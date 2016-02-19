@@ -2,8 +2,8 @@
 
 # init update
 echo "Updating and upgrading..."
-sudo apt-get -y update > ./log/update #/dev/null
-sudo apt-get -y upgrade > ./log/upgrade #/dev/null
+sudo apt-get -y update > ./.log/update #/dev/null
+sudo apt-get -y upgrade > ./.log/upgrade #/dev/null
 
 # git repos
 if [ -f repositories ]; then
@@ -14,7 +14,7 @@ if [ -f repositories ]; then
             lbl=$(echo $repo | cut -d'#' -f 2)
         else
             echo "Gitting "$lbl"..."
-            git clone $repo > ./log/git #/dev/null
+            git clone $repo > ./.log/git #/dev/null
         fi
     done < repositories
 fi
@@ -28,7 +28,7 @@ if [ -f packages ]; then
       pkgmgr=$(echo $pkg | cut -d'#' -f 2)
     else
       echo "Installing "$pkg" with "$pkgmgr"..."
-      sudo $pkgmgr install $pkg > ./log/pkg #/dev/null
+      sudo $pkgmgr install $pkg > ./.log/pkg #/dev/null
     fi
   done < packages
 fi
