@@ -14,7 +14,7 @@ if [ -f repositories ]; then
             lbl=$(echo $repo | cut -d'#' -f 2)
         else
             echo "Gitting "$lbl"..."
-            git clone $repo > ./.log/git #/dev/null
+            eval "git clone $repo" > ./.log/git #/dev/null
         fi
     done < repositories
 fi
