@@ -7,20 +7,6 @@ echo "Updating and upgrading..."
 sudo apt-get -y update > ./.log/update
 sudo apt-get -y upgrade > ./.log/upgrade
 
-# git repos
-if [ -f repositories ]; then
-    sudo apt-get -y install git
-    echo "Gitting repositories..."
-    while read -r repo || [[ -n $repo ]]; do
-        if [[ $repo == "#"* ]]; then
-            lbl=$(echo $repo | cut -d'#' -f 2)
-        else
-            echo "Gitting "$lbl"..."
-            eval "git clone $repo > ./.log/git"
-        fi
-    done < repositories
-fi
-
 # install packages
 if [ -f packages ]; then
   echo "Installing packages..."
@@ -33,6 +19,19 @@ if [ -f packages ]; then
       sudo $pkgmgr install $pkg > ./.log/pkg
     fi
   done < packages
+fi
+
+# git repos
+if [ -f repositories ]; then
+    echo "Gitting repositories..."
+    while read -r repo || [[ -n $repo ]]; do
+        if [[ $repo == "#"* ]]; then
+            lbl=$(echo $repo | cut -d'#' -f 2)
+        else
+            echo "Gitting "$lbl"..."
+            eval "git clone $repo > ./.log/git"
+        fi
+    done < repositories
 fi
 
 echo -n "If you have an SSH server input the address now (blank=skip):"
