@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'thor'
+require 'droplet_kit'
 
 ##################
 # Prime Settings #
@@ -60,7 +61,7 @@ class Util < Thor
       end 
 
       puts `util port -op #{port}`
-      puts `ruby -run -ehttpd . -p#{port}`
+      puts `ruby -run -e httpd . -p #{port}`
       puts `util port -cp #{port}`
     else
       puts "Port must be numeric: #{port}"
@@ -112,6 +113,100 @@ class Util < Thor
       puts "IP address is required"
     end
   end
+  
+    desc "ocean [-k, -u, -d, -r, -c, -s]", "Allows you to interact with the Digital Ocean API"
+    
+    option  :key,
+            :type => :string,
+            :default => OCEAN_KEY,
+            :aliases => 'k'
+    
+    option  :remove,
+            :type => :boolean,
+            :aliases => 'r'
+
+    option  :create,
+            :type => :boolean,
+            :aliases => 'c'
+    
+    option  :drop,
+            :type => :string,
+            :aliases => 'd'
+    
+    option  :snap,
+            :type => :string,
+            :aliases => 's'
+    
+    def ocean
+        o = options
+        if o[:key] && o[:drop] then
+            client = DropletKit::Client.new(access_token: o[:key])
+            drop = nil
+            if o[:create] then
+              if !o[:snap].blank? then
+                image = nil
+                images = client.images.all()
+                images.each do |img|
+                  if img.name == o[:snap]
+                    image = img
+                  end
+                end
+                
+                if !image.blank? then
+                  drop = DropletKit::Droplet.new(name: o[:drop], region: 'nyc3', image: image.id, size: '512mb')
+                  created = client.droplets.create(drop)
+                end
+              else
+                drop = DropletKit::Droplet.new(name: o[:drop], region: 'nyc3', image: 'ubuntu-14-04-x64', size: '512mb')
+                created = client.droplets.create(drop)
+              end
+              
+              if !drop.blank? then
+                puts "#{drop.name} has been created#{o[:snap].blank? ? '' : " from snapshot '#{o[:snap]}'"}"
+              end
+            else
+              if !o[:drop].blank? then
+                drops = client.droplets.all
+                drops.each do |d|
+                  if d.name == o[:drop] || d.id.to_s == o[:drop] then
+                    drop = d
+                    break
+                  end
+                end
+              end
+              
+              if o[:remove] then
+                if !drop.blank? then
+                  if !o[:snap].blank? then
+                    client.droplet_actions.power_off(droplet_id: drop.id)
+                    attempts = 0
+                    while drop.status != 'off' do
+                      sleep 1
+                      drop = client.droplets.find(id: drop.id)
+                    end
+                    client.droplet_actions.snapshot(droplet_id: drop.id, name: "#{o[:snap]}-#{Time.now.to_i}")
+                  end
+                  
+                  
+                  client.droplets.delete(id: drop.id)
+                  
+                  puts "#{drop.name} has been removed#{o[:snap].blank? ? '' : " and snapshot '#{o[:snap]}' has been created"}"
+                end
+                
+              elsif !drop.blank?
+                puts "#{drop.name} found"
+                puts drop.status
+              end
+              
+            end
+            if drop.blank? then
+              puts "Something terrible has happened"
+            end
+        else
+            puts "API key and drop details are required"
+        end
+    end
+  
 end
 
 Util.start(ARGV)

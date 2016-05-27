@@ -16,6 +16,7 @@ deluge
 deluge-web
 ncdu
 #gem
+droplet_kit
 thor
 #npm
 http-server

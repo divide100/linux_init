@@ -42,6 +42,14 @@ if [[ ! -z $sshaddr ]]; then
   echo 'SSH_ADDRESS="'$sshaddr'"' >> home/bin/.utilrc.rb
 fi
 
+echo -n "If you have a Digital Ocean API Key enter it now (blank=skip):"
+read dokey
+
+if [[ ! -z $dokey ]]; then
+  "Creating $dokey variable..."
+  echo 'OCEAN_KEY="'$dokey'"' >> home/bin/.utilrc.rb
+fi
+
 if [ -d home ]; then
   echo "Adding home files and folders..."
 	cp -a home/. ~/
