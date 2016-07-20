@@ -13,8 +13,10 @@ highlight
 atool
 tmux
 vim
+lsof
 deluge
 deluge-web
+deluged
 ncdu
 #gem
 droplet_kit
